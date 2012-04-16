@@ -35,6 +35,8 @@ function randomFromInterval(from,to)
 
 var allStrings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
+totalPress = 0;
+correctPress = 0
 
 function randomLetter()
 {
@@ -62,9 +64,7 @@ $(function(){
             letter = randomLetter();
             val = $("<div></div>");
             $(val).addClass("text");
-            console.log(letter);
             $(val).attr("id", letter);
-            console.log(letter);
             $(val).html(letter);
             var randX = randomFromInterval(10, 800);
     		var randY = randomFromInterval(10, 500);
@@ -89,11 +89,14 @@ $(function(){
 	});
 	
 	$('body').keypress(function(event){
+	    totalPress += 1;
 	    letterInput = String.fromCharCode(event.which);
 		$("#"+letterInput).remove();
 		if (strings.indexOf(letterInput) <= 0){
 		    if (allStrings.indexOf(letterInput) >=0){
-		     strings.push(letterInput);   
+		     strings.push(letterInput);
+		     correctPress += 1;
+		     console.log(correctPress/totalPress)
 		    };
 		};
 		var randX = randomFromInterval(50, 300);
