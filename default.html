@@ -61,7 +61,9 @@ $(function(){
             letter = randomLetter();
             val = $("<div></div>");
             $(val).addClass("text");
+            console.log(letter);
             $(val).attr("id", letter);
+            console.log(letter);
             $(val).html(letter);
             var randX = randomFromInterval(10, 800);
     		var randY = randomFromInterval(10, 500);
@@ -69,7 +71,7 @@ $(function(){
     		$(val).css('top', randY+'px');
          	$("body").append(val);
          }
-     	setTimeout("makeTextBox()",1000);
+     	setTimeout("makeTextBox()",500);
     }
     
     function doTimer() {
@@ -77,13 +79,6 @@ $(function(){
     }
     
     doTimer();
-    
-	var randX = randomFromInterval(50, 300);
-	var randY = randomFromInterval(50, 300);	
-	$(".clickable").css('left', randX+'px');
-	$(".clickable").css('top', randY+'px');
-	
-	$('.text').html(randomLetter($(this).html()));
 	
 	$(".clickable").click(function(){
 		var randX = randomFromInterval(50, 300);
@@ -94,8 +89,8 @@ $(function(){
 	
 	$('body').keypress(function(event){
 	    letterInput = String.fromCharCode(event.which);
-	    strings.push(letterInput);
 		$("#"+letterInput).remove();
+		strings.push(letterInput);
 		var randX = randomFromInterval(50, 300);
 		var randY = randomFromInterval(50, 300);
 		$(this).css('left', randX+'px');
