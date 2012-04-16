@@ -74,7 +74,9 @@ $(function(){
     		var randY = randomFromInterval(10, 500);
     		$(val).css('left', randX+'px');
     		$(val).css('top', randY+'px');
-         	$("body").append(val);
+    		if ($("#"+letter)[0] == undefined){
+             	$("body").append(val);
+             }
          }
      	setTimeout("makeTextBox()",500);
     }
@@ -96,7 +98,6 @@ $(function(){
 	    totalPress += 1;
 	    letterInput = String.fromCharCode(event.which);
 		$("#"+letterInput).remove();
-		console.log(allStrings.indexOf(letterInput));
 		if (strings.indexOf(letterInput) <= 0){
 		    if (allStrings.indexOf(letterInput) >= 0){
 		     strings.push(letterInput);
