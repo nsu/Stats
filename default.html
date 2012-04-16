@@ -6,53 +6,101 @@
 <head>
 
 <title>Multitasking Test</title>
+<style type="text/css" media="screen">
+    .text{
+        border:3px solid black;
+        font-family:sans-serif;
+        font-size:2em;
+        background-color:red;
+        height:50px;
+        width:50px;
+        position:absolute;
+        text-align:center;
+    }
+    
+    .clickable{
+        background-color:blue;
+        height:50px;
+        width:50px;
+        position:absolute;
+        border:3px solid black;
+    }
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
+function randomFromInterval(from,to)
+{
+    return Math.floor(Math.random()*(to-from+1)+from);
+}
+
+    var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
+
+function randomLetter()
+{
+    strings = shuffle(strings);
+    return strings.pop();
+}
+
+function shuffle(array) {
+    var tmp, current, top = array.length;
+
+    if(top) while(--top) {
+        current = Math.floor(Math.random() * (top + 1));
+        tmp = array[current];
+        array[current] = array[top];
+        array[top] = tmp;
+    }
+
+    return array;
+}
+
 $(function(){
-	function randomFromInterval(from,to)
-	{
-	    return Math.floor(Math.random()*(to-from+1)+from);
-	}
 
-	function randomLetter(prev)
-	{
-		// var strings = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-		var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
-		if (prev) {
-			do {
-				toReturn = strings[randomFromInterval(0, strings.length-1)]
-        } while (toReturn == prev);
-		} else	{
-			toReturn = strings[randomFromInterval(0, strings.length-1)]	
-		};
-		return toReturn
-	}
-
-
+    makeTextBox = function(){
+        if (strings.length != 0) {
+            letter = randomLetter();
+            val = $("<div></div>");
+            $(val).addClass("text");
+            $(val).attr("id", letter);
+            $(val).html(letter);
+            var randX = randomFromInterval(10, 800);
+    		var randY = randomFromInterval(10, 500);
+    		$(val).css('left', randX+'px');
+    		$(val).css('top', randY+'px');
+         	$("body").append(val);
+         }
+     	setTimeout("makeTextBox()",1000);
+    }
+    
+    function doTimer() {
+        makeTextBox();
+    }
+    
+    doTimer();
+    
 	var randX = randomFromInterval(50, 300);
 	var randY = randomFromInterval(50, 300);	
-	$("#clickable").css('left', randX+'px');
-	$("#clickable").css('top', randY+'px');
+	$(".clickable").css('left', randX+'px');
+	$(".clickable").css('top', randY+'px');
 	
-	$('#text').html(randomLetter($('#text').html()));
+	$('.text').html(randomLetter($(this).html()));
 	
-	$("#clickable").click(function(){
+	$(".clickable").click(function(){
 		var randX = randomFromInterval(50, 300);
 		var randY = randomFromInterval(50, 300);
-		$("#clickable").css('left', randX+'px');
-		$("#clickable").css('top', randY+'px');
+		$(this).css('left', randX+'px');
+		$(this).css('top', randY+'px');
 	});
 	
 	$('body').keypress(function(event){
-		if (String.fromCharCode(event.which)==$('#text').html()) {
-			$('#text').html(randomLetter($('#text').html()));
-			var randX = randomFromInterval(50, 300);
-			var randY = randomFromInterval(50, 300);
-			$("#text").css('left', randX+'px');
-			$("#text").css('top', randY+'px');
-		};
+	    letterInput = String.fromCharCode(event.which);
+	    strings.push(letterInput);
+		$("#"+letterInput).remove();
+		var randX = randomFromInterval(50, 300);
+		var randY = randomFromInterval(50, 300);
+		$(this).css('left', randX+'px');
+		$(this).css('top', randY+'px');
 	});
-	
 });
 </script>
 
@@ -60,9 +108,8 @@ $(function(){
 
 <body>
 
-<div id="text" style="font-family:sans-serif;font-size:2em;background-color:red;height:50px;width:50px;position:absolute;text-align:center"></div>
-<div id="clickable" style="background-color:blue;height:50px;width:50px;position:absolute"></div>
 
+<!-- <div class="clickable"></div> -->
 
 </body>
 </html>
