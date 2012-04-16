@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+
+<title>Multitasking Test</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	function randomFromInterval(from,to)
+	{
+	    return Math.floor(Math.random()*(to-from+1)+from);
+	}
+
+	function randomLetter(prev)
+	{
+		// var strings = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+		var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
+		if (prev) {
+			do {
+				toReturn = strings[randomFromInterval(0, strings.length-1)]
+			} while (toReturn == prev);	
+		} else	{
+			toReturn = strings[randomFromInterval(0, strings.length-1)]	
+		};
+		return toReturn
+	}
+
+
+	var randX = randomFromInterval(50, 300);
+	var randY = randomFromInterval(50, 300);	
+	$("#clickable").css('left', randX+'px');
+	$("#clickable").css('top', randY+'px');
+	
+	$('#text').html(randomLetter($('#text').html()));
+	
+	$("#clickable").click(function(){
+		var randX = randomFromInterval(50, 300);
+		var randY = randomFromInterval(50, 300);
+		$("#clickable").css('left', randX+'px');
+		$("#clickable").css('top', randY+'px');
+	});
+	
+	$('body').keypress(function(event){
+		if (String.fromCharCode(event.which)==$('#text').html()) {
+			$('#text').html(randomLetter($('#text').html()));
+			var randX = randomFromInterval(50, 300);
+			var randY = randomFromInterval(50, 300);
+			$("#text").css('left', randX+'px');
+			$("#text").css('top', randY+'px');
+		};
+	});
+	
+});
+</script>
+
+</head>
+
+<body>
+
+<div id="text" style="font-family:sans-serif;font-size:2em;background-color:red;height:50px;width:50px;position:absolute;text-align:center"></div>
+<div id="clickable" style="background-color:blue;height:50px;width:50px;position:absolute"></div>
+
+
+</body>
+</html>
