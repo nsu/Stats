@@ -57,6 +57,10 @@ function shuffle(array) {
     return array;
 }
 
+function round(n) {
+	return Math.round(n*100+((n*1000)%10>4?1:0))/100;
+}
+
 $(function(){
 
     makeTextBox = function(){
@@ -92,17 +96,18 @@ $(function(){
 	    totalPress += 1;
 	    letterInput = String.fromCharCode(event.which);
 		$("#"+letterInput).remove();
+		console.log(allStrings.indexOf(letterInput));
 		if (strings.indexOf(letterInput) <= 0){
-		    if (allStrings.indexOf(letterInput) >=0){
+		    if (allStrings.indexOf(letterInput) >= 0){
 		     strings.push(letterInput);
 		     correctPress += 1;
-		     console.log(correctPress/totalPress)
 		    };
 		};
 		var randX = randomFromInterval(50, 300);
 		var randY = randomFromInterval(50, 300);
 		$(this).css('left', randX+'px');
 		$(this).css('top', randY+'px');
+        $("#press-accuracy").html(round(correctPress/totalPress*100)+"%")
 	});
 });
 </script>
@@ -111,8 +116,7 @@ $(function(){
 
 <body>
 
-
-<!-- <div class="clickable"></div> -->
+<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</div></div>
 
 </body>
 </html>
