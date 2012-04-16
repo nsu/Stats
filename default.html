@@ -78,7 +78,7 @@ $(function(){
     *the class name of this box is the same as the letter within.
     *It will make boxes until the list is empty.
     **/
-    function makeTextBox(){
+    makeTextBox = function(){
         if (strings.length != 0) {
             letter = randomLetter();
             val = $("<div></div>");
