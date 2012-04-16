@@ -33,27 +33,17 @@ function randomFromInterval(from,to)
     return Math.floor(Math.random()*(to-from+1)+from);
 }
 
-/**
-*allStrings: List of all allowed strings
-*strings: List for randomization to pull out letter values
-**/
 var allStrings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 totalPress = 0;
 correctPress = 0
 
-/**
-*randomLetter: randomizes strings, then pops the last letter in the list.
-**/
 function randomLetter()
 {
     strings = shuffle(strings);
     return strings.pop();
 }
 
-/**
-*shuffle: takes in an array, shuffles it around, and returns it.
-**/
 function shuffle(array) {
     var tmp, current, top = array.length;
 
@@ -73,12 +63,7 @@ function round(n) {
 
 $(function(){
 
-    /**
-    *makeTextBox: makes a text box with a random letter in it in a random location in our div. 
-    *the class name of this box is the same as the letter within.
-    *It will make boxes until the list is empty.
-    **/
-    function makeTextBox(){
+    makeTextBox = function(){
         if (strings.length != 0) {
             letter = randomLetter();
             val = $("<div></div>");
@@ -93,7 +78,7 @@ $(function(){
              	$("body").append(val);
              }
          }
-     	setTimeout("makeTextBox()",800);    //RECURSION HERE BRAH.
+     	setTimeout("makeTextBox()",500);
     }
     
     function doTimer() {
@@ -102,9 +87,6 @@ $(function(){
     
     doTimer();
 	
-	/**
-	*When an object of class clickable is clicked on, we move the box to a new location.
-	**/
 	$(".clickable").click(function(){
 		var randX = randomFromInterval(50, 300);
 		var randY = randomFromInterval(50, 300);
@@ -112,9 +94,6 @@ $(function(){
 		$(this).css('top', randY+'px');
 	});
 	
-	/**
-	*When a key is pressed, we remove the box with that letter, and, if the letter is in the list of allowed letters, we push it back onto the list of available letters.
-	**/
 	$('body').keypress(function(event){
 	    totalPress += 1;
 	    letterInput = String.fromCharCode(event.which);
@@ -125,6 +104,7 @@ $(function(){
 		     correctPress += 1;
 		    };
 		};
+        $("#press-accuracy").html(round(correctPress/totalPress*100)+"%")
 	});
 });
 </script>
