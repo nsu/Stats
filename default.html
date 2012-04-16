@@ -39,6 +39,8 @@ function randomFromInterval(from,to)
 **/
 var allStrings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
+totalPress = 0;
+correctPress = 0
 
 /**
 *randomLetter: randomizes strings, then pops the last letter in the list.
@@ -65,6 +67,10 @@ function shuffle(array) {
     return array;
 }
 
+function round(n) {
+	return Math.round(n*100+((n*1000)%10>4?1:0))/100;
+}
+
 $(function(){
 
     /**
@@ -77,15 +83,15 @@ $(function(){
             letter = randomLetter();
             val = $("<div></div>");
             $(val).addClass("text");
-            console.log(letter);
             $(val).attr("id", letter);
-            console.log(letter);
             $(val).html(letter);
             var randX = randomFromInterval(10, 800);
     		var randY = randomFromInterval(10, 500);
     		$(val).css('left', randX+'px');
     		$(val).css('top', randY+'px');
-         	$("body").append(val);
+    		if ($("#"+letter)[0] == undefined){
+             	$("body").append(val);
+             }
          }
      	setTimeout("makeTextBox()",800);    //RECURSION HERE BRAH.
     }
@@ -110,11 +116,13 @@ $(function(){
 	*When a key is pressed, we remove the box with that letter, and, if the letter is in the list of allowed letters, we push it back onto the list of available letters.
 	**/
 	$('body').keypress(function(event){
+	    totalPress += 1;
 	    letterInput = String.fromCharCode(event.which);
 		$("#"+letterInput).remove();
 		if (strings.indexOf(letterInput) <= 0){
-		    if (allStrings.indexOf(letterInput) >=0){
-		     strings.push(letterInput);   
+		    if (allStrings.indexOf(letterInput) >= 0){
+		     strings.push(letterInput);
+		     correctPress += 1;
 		    };
 		};
 	});
@@ -125,8 +133,7 @@ $(function(){
 
 <body>
 
-
-<!-- <div class="clickable"></div> -->
+<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</div></div>
 
 </body>
 </html>
