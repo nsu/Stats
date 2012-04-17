@@ -36,7 +36,9 @@ function randomFromInterval(from,to)
 var allStrings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 totalPress = 0;
-correctPress = 0
+correctPress = 0;
+totalClick = 0;
+correctClick = 0;
 
 function randomLetter()
 {
@@ -78,20 +80,35 @@ $(function(){
              	$("body").append(val);
              }
          }
-     	setTimeout("makeTextBox()",500);
+     	setTimeout("makeTextBox()",randomFromInterval(500, 1400));
+    }
+    
+    makeClickBox = function(){
+        clickBox = $("<div></div>");
+        $(clickBox).addClass("clickable");
+        var randX = randomFromInterval(10, 800);
+		var randY = randomFromInterval(10, 500);
+		$(clickBox).css('left', randX+'px');
+		$(clickBox).css('top', randY+'px');
+		$("body").append(clickBox);
+     	setTimeout("makeClickBox()",randomFromInterval(500, 1400));
     }
     
     function doTimer() {
         makeTextBox();
+        setTimeout("makeClickBox()", randomFromInterval(500, 1400))
     }
     
     doTimer();
 	
-	$(".clickable").click(function(){
-		var randX = randomFromInterval(50, 300);
-		var randY = randomFromInterval(50, 300);
-		$(this).css('left', randX+'px');
-		$(this).css('top', randY+'px');
+	$("html").click(function(e){
+	    console.log(totalClick)
+	    totalClick +=1;
+	    if ($(e.target).hasClass('clickable')){
+    	    $(e.target).remove();
+    	    correctClick +=1;
+	    };
+	    $("#click-accuracy").html(round(correctClick/totalClick*100)+"%");
 	});
 	
 	$('body').keypress(function(event){
@@ -113,7 +130,10 @@ $(function(){
 
 <body>
 
-<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</div></div>
+<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</span></div>
+<br />
+<div style="float:right;">Click-accuracy: <span id="click-accuracy">-</span></div>
+    
 
 </body>
 </html>
