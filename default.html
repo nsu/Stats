@@ -16,6 +16,7 @@
         width:50px;
         position:absolute;
         text-align:center;
+        z-index: -999;
     }
     
     .clickable{
@@ -36,7 +37,10 @@ function randomFromInterval(from,to)
 var allStrings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 totalPress = 0;
-correctPress = 0
+correctPress = 0;
+totalClick = 0;
+correctClick = 0;
+gameOver = false
 
 function randomLetter()
 {
@@ -61,6 +65,14 @@ function round(n) {
 	return Math.round(n*100+((n*1000)%10>4?1:0))/100;
 }
 
+function endGame() {
+    console.log(correctClick/totalClick)
+    console.log(correctPress/totalPress)
+    gameOver = true;
+    $(".clickable").remove();
+    $(".text").remove();
+}
+
 $(function(){
 
     /**
@@ -83,20 +95,45 @@ $(function(){
              	$("body").append(val);
              }
          }
-     	setTimeout("makeTextBox()",500);
+        if (gameOver !== true){
+         	setTimeout("makeTextBox()",randomFromInterval(500, 1400));
+     	} else {
+     	    $(".text").remove();
+     	}
+    }
+    
+    makeClickBox = function(){
+        if ($('.clickable').length <= 14){
+            clickBox = $("<div></div>");
+            $(clickBox).addClass("clickable");
+            var randX = randomFromInterval(10, 800);
+    		var randY = randomFromInterval(10, 500);
+    		$(clickBox).css('left', randX+'px');
+    		$(clickBox).css('top', randY+'px');
+    		$("body").append(clickBox);
+    	};
+    	if (gameOver !== true){
+         	setTimeout("makeClickBox()",randomFromInterval(500, 1400));
+        } else {
+            $(".clickable").remove();
+        }
     }
     
     function doTimer() {
         makeTextBox();
+        setTimeout("makeClickBox()", randomFromInterval(500, 1400))
+        setTimeout("endGame()", 30000)
     }
     
     doTimer();
 	
-	$(".clickable").click(function(){
-		var randX = randomFromInterval(50, 300);
-		var randY = randomFromInterval(50, 300);
-		$(this).css('left', randX+'px');
-		$(this).css('top', randY+'px');
+	$("html").click(function(e){
+	    totalClick +=1;
+	    if ($(e.target).hasClass('clickable')){
+    	    $(e.target).remove();
+    	    correctClick +=1;
+	    }; 
+	    $("#click-accuracy").html(round(correctClick/totalClick*100)+"%");
 	});
 	
 	$('body').keypress(function(event){
@@ -118,7 +155,10 @@ $(function(){
 
 <body>
 
-<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</div></div>
+<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</span></div>
+<br />
+<div style="float:right;">Click-accuracy: <span id="click-accuracy">-</span></div>
+    
 
 </body>
 </html>
