@@ -8,3 +8,16 @@ Aims for project:
 
 
 Measure: number of things relative to time? modify with accuracy? Point system is best.
+
+User Data:
+1. Name (*optional)
+2. Do you play starcraft 2? Any other rts experience?
+    -if yes, then: Rank or other game played. Other game players might be excluded or included in a different group.
+3. Ip
+4. Number of things clicked
+5. Number of things typed
+6. Accuraccy of clicking and typing
+7. Time between events? Or is this determined by # of things?
+8. Age? (*optional)
+9. Input device? (*optional)
+10. How did you get here? (*optional)
