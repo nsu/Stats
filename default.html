@@ -27,21 +27,32 @@
         border:3px solid black;
     }
 </style>
+<link rel="stylesheet" href="formstyle.css" type="text/css" media="screen" title="no title" charset="utf-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 <script src="jquery.jsoncookie.js" type="text/javascript" charset="utf-8"></script>
 <script src="custom.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery-ui-1.8.19.custom.min.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
 $(function(){
 
-    name = null;
-    o = $.JSONCookie('name');
-    console.log(o);
+    name = "753848ea5e4c9568d6167c28dac1e532644027be";
+    savedCookie = $.JSONCookie(name);
+    if (savedCookie == null){
+        
+    }
     var obj = {"foo": "bar"}
-    $.JSONCookie('name', obj, {path: '/'});
+    $.JSONCookie(name, obj, {path: '/'});
     
-    doTimer();
+    $.ajax({
+        url: "form.html",
+        cache: false
+    }).done(function( html ) {
+        $("body").append(html);
+    });
+    
+    // doTimer();
 	
 	$("html").click(function(e){
 	    totalClick +=1;
