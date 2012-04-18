@@ -16,6 +16,7 @@
         width:50px;
         position:absolute;
         text-align:center;
+        z-index: -999;
     }
     
     .clickable{
@@ -39,6 +40,7 @@ totalPress = 0;
 correctPress = 0;
 totalClick = 0;
 correctClick = 0;
+gameOver = false
 
 function randomLetter()
 {
@@ -63,6 +65,14 @@ function round(n) {
 	return Math.round(n*100+((n*1000)%10>4?1:0))/100;
 }
 
+function endGame() {
+    console.log(correctClick/totalClick)
+    console.log(correctPress/totalPress)
+    gameOver = true;
+    $(".clickable").remove();
+    $(".text").remove();
+}
+
 $(function(){
 
     makeTextBox = function(){
@@ -80,34 +90,44 @@ $(function(){
              	$("body").append(val);
              }
          }
-     	setTimeout("makeTextBox()",randomFromInterval(500, 1400));
+        if (gameOver !== true){
+         	setTimeout("makeTextBox()",randomFromInterval(500, 1400));
+     	} else {
+     	    $(".text").remove();
+     	}
     }
     
     makeClickBox = function(){
-        clickBox = $("<div></div>");
-        $(clickBox).addClass("clickable");
-        var randX = randomFromInterval(10, 800);
-		var randY = randomFromInterval(10, 500);
-		$(clickBox).css('left', randX+'px');
-		$(clickBox).css('top', randY+'px');
-		$("body").append(clickBox);
-     	setTimeout("makeClickBox()",randomFromInterval(500, 1400));
+        if ($('.clickable').length <= 14){
+            clickBox = $("<div></div>");
+            $(clickBox).addClass("clickable");
+            var randX = randomFromInterval(10, 800);
+    		var randY = randomFromInterval(10, 500);
+    		$(clickBox).css('left', randX+'px');
+    		$(clickBox).css('top', randY+'px');
+    		$("body").append(clickBox);
+    	};
+    	if (gameOver !== true){
+         	setTimeout("makeClickBox()",randomFromInterval(500, 1400));
+        } else {
+            $(".clickable").remove();
+        }
     }
     
     function doTimer() {
         makeTextBox();
         setTimeout("makeClickBox()", randomFromInterval(500, 1400))
+        setTimeout("endGame()", 30000)
     }
     
     doTimer();
 	
 	$("html").click(function(e){
-	    console.log(totalClick)
 	    totalClick +=1;
 	    if ($(e.target).hasClass('clickable')){
     	    $(e.target).remove();
     	    correctClick +=1;
-	    };
+	    }; 
 	    $("#click-accuracy").html(round(correctClick/totalClick*100)+"%");
 	});
 	
