@@ -1,0 +1,10 @@
+Aims for project:
+
+1. Timer
+2. Accuracy
+3. Number of things
+4. Save user data (e.g. name, rank, points, accuracy, etc)
+5. 
+
+
+Measure: number of things relative to time? modify with accuracy? Point system is best.
