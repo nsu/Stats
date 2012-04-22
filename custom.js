@@ -1,3 +1,9 @@
+totalPress = 0;
+correctPress = 0;
+correctClick = 0;
+totalClick = 0;
+gameStarted = false;
+
 makeTextBox = function(){
     if (strings.length != 0) {
         letter = randomLetter();
@@ -14,7 +20,7 @@ makeTextBox = function(){
          }
      }
     if (gameOver !== true){
-     	setTimeout("makeTextBox()",randomFromInterval(100, 1400));
+     	setTimeout("makeTextBox()",randomFromInterval(200, 1400));
  	} else {
  	    $(".text").remove();
  	}
@@ -31,7 +37,7 @@ makeClickBox = function(){
 		$("body").append(clickBox);
 	};
 	if (gameOver !== true){
-     	setTimeout("makeClickBox()",randomFromInterval(100, 1400));
+     	setTimeout("makeClickBox()",randomFromInterval(200, 1400));
     } else {
         $(".clickable").remove();
     }
@@ -39,8 +45,10 @@ makeClickBox = function(){
 
 function doTimer() {
     makeTextBox();
-    setTimeout("makeClickBox()", randomFromInterval(100, 1400))
+    setTimeout("makeClickBox()", randomFromInterval(200, 1400))
     setTimeout("endGame()", 30000)
+    totalClick -= 1;
+    totalPress = 0;
 }
 
 function randomFromInterval(from,to)
@@ -50,10 +58,6 @@ function randomFromInterval(from,to)
 
 var allStrings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
 var strings = ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v']
-totalPress = 0;
-correctPress = 0;
-totalClick = 0;
-correctClick = 0;
 gameOver = false
 
 function randomLetter()
@@ -88,7 +92,13 @@ function endGame() {
     savedCookie['keyRemaining'] = $('.text').length
     savedCookie['correctClick'] = correctClick
     savedCookie['correctPress'] = correctPress
-    $.post("localhost:8000/submit/",savedCookie);
+    $.ajax({
+        url: 'http://localhost:8000/submit/',
+        data: savedCookie,
+        type: 'GET',
+        crossDomain: true,
+        dataType: 'jsonp',        
+    });
     gameOver = true;
     $(".clickable").remove();
     $(".text").remove();

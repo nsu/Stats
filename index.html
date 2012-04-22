@@ -39,7 +39,7 @@ $(function(){
 
     name = "753848ea5e4c9568d6167c28dac1e532644027be";
     savedCookie = $.JSONCookie(name);
-    if (savedCookie['guid'] === undefined){
+    if (savedCookie['guid'] !== undefined){
         $.ajax({
             url: "form.html",
             cache: false
@@ -49,7 +49,7 @@ $(function(){
     }
     
     $("#button-holder").click(function(e){
-        if (savedCookie['guid'] === undefined){
+        if (savedCookie['guid'] !== undefined){
             jsonData = {}        
             jsonData['guid'] = makeGUID()
             jsonData['scTwo'] = $('input:checkbox[name=scTwo]:checked').val(); 
