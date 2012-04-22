@@ -6,33 +6,47 @@ form {
 </style>
 <script type="text/javascript" charset="utf-8">
     $(function() {
-        $("#player").click(function(){
+        $("#RTS").click(function(){
             if ($(this).is(':checked')) {
-                $("#sc-data").fadeIn().slideDown();
+                $("#sc-form").fadeIn();
             } else {
-                $("#sc-data").fadeOut().slideUp();
+                $("#sc-form").fadeOut();
             };
-        })
+        });
+        
+        $("#scTwo").click(function(){
+            if ($(this).is(':checked')) {
+                $("#sc-data").fadeIn();
+            } else {
+                $("#sc-data").fadeOut();
+            };
+        });
 	});
 </script>
 
-<form action="" id="sc-form">
-    <label for="player">Do you play Starcraft</label>
-    <input type="checkbox" id="player" name="player"/>
-
-    <br />
+<form action="" id="start-form">
+    <label for="RTS">Do you play an RTS</label>
+    <input type="checkbox" id="RTS" name="RTS"/>
     
-    <div id="sc-data" style="display:none">
-    <label for="league">What league are you in?</label>
-    <select id="league">
-        <option value=""></option>
-        <option value="bronze">Bronze</option>
-        <option value="silver">Silver</option>
-        <option value="gold">Gold</option>
-        <option value="platinum">Platinum</option>
-        <option value="diamond">Diamond</option>
-        <option value="master">Master</option>
-        <option value="grandmaster">GrandMaster</option>
-    </select>
+    <br />
+
+    <div id="sc-form" style="display:none">
+        <label for="scTwo">Do you play Starcraft</label>
+        <input type="checkbox" id="scTwo" name="scTwo"/>
+    
+        <div id="sc-data" style="display:none">
+            <label for="league">What league are you in?</label>
+            <select id="league">
+                <option value=""></option>
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+                <option value="platinum">Platinum</option>
+                <option value="diamond">Diamond</option>
+                <option value="master">Master</option>
+                <option value="grandmaster">GrandMaster</option>
+            </select>
+        </div>
     </div>
+    
 </form>

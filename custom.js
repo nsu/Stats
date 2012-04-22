@@ -86,6 +86,8 @@ function endGame() {
     savedCookie['keyAcc'] = correctPress/totalPress
     savedCookie['clickRemaining'] = $(".clickable").length
     savedCookie['keyRemaining'] = $('.text').length
+    savedCookie['correctClick'] = correctClick
+    savedCookie['correctPress'] = correctPress
     console.log(savedCookie)
     gameOver = true;
     $(".clickable").remove();
