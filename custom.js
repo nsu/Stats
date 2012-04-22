@@ -14,14 +14,14 @@ makeTextBox = function(){
          }
      }
     if (gameOver !== true){
-     	setTimeout("makeTextBox()",randomFromInterval(500, 1400));
+     	setTimeout("makeTextBox()",randomFromInterval(100, 1400));
  	} else {
  	    $(".text").remove();
  	}
 }
 
 makeClickBox = function(){
-    if ($('.clickable').length <= 14){
+    if ($('.clickable').length <= 13){
         clickBox = $("<div></div>");
         $(clickBox).addClass("clickable");
         var randX = randomFromInterval(10, 800);
@@ -31,7 +31,7 @@ makeClickBox = function(){
 		$("body").append(clickBox);
 	};
 	if (gameOver !== true){
-     	setTimeout("makeClickBox()",randomFromInterval(500, 1400));
+     	setTimeout("makeClickBox()",randomFromInterval(100, 1400));
     } else {
         $(".clickable").remove();
     }
@@ -39,8 +39,8 @@ makeClickBox = function(){
 
 function doTimer() {
     makeTextBox();
-    setTimeout("makeClickBox()", randomFromInterval(500, 1400))
-    setTimeout("endGame()", 30000)
+    setTimeout("makeClickBox()", randomFromInterval(100, 1400))
+    setTimeout("endGame()", 60000)
 }
 
 function randomFromInterval(from,to)
@@ -80,9 +80,22 @@ function round(n) {
 }
 
 function endGame() {
-    console.log(correctClick/totalClick)
-    console.log(correctPress/totalPress)
+    name = "753848ea5e4c9568d6167c28dac1e532644027be";
+    savedCookie = $.JSONCookie(name);
+    savedCookie['clickAcc'] = correctClick/totalClick
+    savedCookie['keyAcc'] = correctPress/totalPress
+    savedCookie['clickRemaining'] = $(".clickable").length
+    savedCookie['keyRemaining'] = $('.text').length
+    console.log(savedCookie)
     gameOver = true;
     $(".clickable").remove();
     $(".text").remove();
+    
+}
+
+function makeGUID() {
+    d = new Date()
+    time = String(d.getTime())
+    rand = String(randomFromInterval(0, 10000))
+    return time+rand
 }

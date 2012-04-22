@@ -1,20 +1,38 @@
 <style>
 body {font-family: Helvetica, Arial, sans-serif;}
+form {
+    margin-bottom:20px;
+}
 </style>
 <script type="text/javascript" charset="utf-8">
     $(function() {
-        
+        $("#player").click(function(){
+            if ($(this).is(':checked')) {
+                $("#sc-data").fadeIn().slideDown();
+            } else {
+                $("#sc-data").fadeOut().slideUp();
+            };
+        })
 	});
 </script>
 
-<form action="">
+<form action="" id="sc-form">
     <label for="player">Do you play Starcraft</label>
-    <input type="checkbox" id="player" name="player" value="player" />
+    <input type="checkbox" id="player" name="player"/>
 
     <br />
     
     <div id="sc-data" style="display:none">
-    <label for="player">Do you play Starcraft</label>
-    <input type="checkbox" id="player" name="player" value="player" />
+    <label for="league">What league are you in?</label>
+    <select id="league">
+        <option value=""></option>
+        <option value="bronze">Bronze</option>
+        <option value="silver">Silver</option>
+        <option value="gold">Gold</option>
+        <option value="platinum">Platinum</option>
+        <option value="diamond">Diamond</option>
+        <option value="master">Master</option>
+        <option value="grandmaster">GrandMaster</option>
+    </select>
     </div>
 </form>
