@@ -40,7 +40,7 @@ makeClickBox = function(){
 function doTimer() {
     makeTextBox();
     setTimeout("makeClickBox()", randomFromInterval(100, 1400))
-    setTimeout("endGame()", 60000)
+    setTimeout("endGame()", 30000)
 }
 
 function randomFromInterval(from,to)
@@ -88,7 +88,7 @@ function endGame() {
     savedCookie['keyRemaining'] = $('.text').length
     savedCookie['correctClick'] = correctClick
     savedCookie['correctPress'] = correctPress
-    console.log(savedCookie)
+    $.post("localhost:8000/submit/",savedCookie);
     gameOver = true;
     $(".clickable").remove();
     $(".text").remove();
