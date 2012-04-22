@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+
+<title>Multitasking Test</title>
+<style type="text/css" media="screen">
+    .text{
+        border:3px solid black;
+        font-family:sans-serif;
+        font-size:2em;
+        background-color:red;
+        height:50px;
+        width:50px;
+        position:absolute;
+        text-align:center;
+        z-index: -999;
+    }
+    
+    .clickable{
+        background-color:blue;
+        height:50px;
+        width:50px;
+        position:absolute;
+        border:3px solid black;
+    }
+</style>
+<!-- <link rel="stylesheet" href="formstyle.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.jsoncookie.js" type="text/javascript" charset="utf-8"></script>
+<script src="custom.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery-ui-1.8.19.custom.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+$(function(){
+
+    name = "753848ea5e4c9568d6167c28dac1e532644027be";
+    savedCookie = $.JSONCookie(name);
+    if (savedCookie['guid'] === undefined){
+        $.ajax({
+            url: "form.html",
+            cache: false
+        }).done(function( html ) {
+            $("#form-holder").prepend(html);
+        });
+    }
+    
+    $("#button-holder").click(function(e){
+        if (savedCookie['guid'] === undefined){
+            jsonData = {}        
+            jsonData['guid'] = makeGUID()
+            jsonData['scTwo'] = $('input:checkbox[name=scTwo]:checked').val(); 
+            if (jsonData['scTwo'] == undefined){
+                jsonData['scTwo'] = false
+            } else {
+                jsonData['scTwo'] = true
+            }
+            jsonData['league'] = $('select[id=league]').val(); 
+            if (jsonData['league'] === ""){
+                jsonData['league'] = false
+            }
+            
+            jsonData['RTS'] = $('input:checkbox[name=RTS]:checked').val(); 
+            if (jsonData['RTS'] == undefined){
+                jsonData['RTS'] = false
+            } else {
+                jsonData['RTS'] = true
+            }
+            
+            jsonData['league'] = $('select[id=league]').val(); 
+            if (jsonData['league'] === ""){
+                jsonData['league'] = false
+            }
+            
+            $.JSONCookie(name, jsonData, {path: '/'});
+        }
+        $("#form-holder").remove();
+        $("#desc").remove()
+        doTimer();
+    });
+	
+	$("html").click(function(e){
+	    totalClick +=1;
+	    if ($(e.target).hasClass('clickable')){
+    	    $(e.target).remove();
+    	    correctClick +=1;
+	    }; 
+	    $("#click-accuracy").html(round(correctClick/totalClick*100)+"%");
+	});
+	
+	$('body').keypress(function(event){
+	    totalPress += 1;
+	    letterInput = String.fromCharCode(event.which);
+		$("#"+letterInput).remove();
+		if (strings.indexOf(letterInput) <= 0){
+		    if (allStrings.indexOf(letterInput) >= 0){
+		     strings.push(letterInput);
+		     correctPress += 1;
+		    };
+		};
+        $("#press-accuracy").html(round(correctPress/totalPress*100)+"%")
+	});
+});
+</script>
+
+</head>
+
+<body>
+
+<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</span></div>
+<br />
+<div style="float:right;">Click-accuracy: <span id="click-accuracy">-</span></div>
+<div id="desc">
+    Click on the blue boxes and type the letters within the red boxes.
+</div>
+<div id="form-holder" style='margin-left:340px;margin-top:250px'>
+    <div id="button-holder" style="margin-left: 60px">
+    <button type='button'>Start</button>
+    </div>
+</div>    
+
+</body>
+</html>
