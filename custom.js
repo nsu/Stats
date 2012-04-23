@@ -46,7 +46,8 @@ makeClickBox = function(){
 function doTimer() {
     makeTextBox();
     setTimeout("makeClickBox()", randomFromInterval(200, 1400))
-    setTimeout("endGame()", 30000)
+    setTimeout("endGame()", 10000)
+    totalClick = 0;
     totalClick -= 1;
     totalPress = 0;
 }
@@ -93,7 +94,7 @@ function endGame() {
     savedCookie['correctClick'] = correctClick
     savedCookie['correctPress'] = correctPress
     $.ajax({
-        url: 'http://localhost:8000/submit/',
+        url: 'http://source5.org/statsapp/submit/',
         data: savedCookie,
         type: 'GET',
         crossDomain: true,
@@ -102,7 +103,17 @@ function endGame() {
     gameOver = true;
     $(".clickable").remove();
     $(".text").remove();
-    
+    $("#accuracies").remove()
+    var clickAcc = correctClick/totalClick
+    var keyAcc = correctPress/totalPress
+    var finalScore = $("<div></div>")
+    finalScore.addClass("final-score")
+    finalScore.append("Click accuracy: "+round(clickAcc*100)+"%<br />")
+    finalScore.append("Keyboard accuracy: "+round(keyAcc*100)+"%<br />")
+    finalScore.append("Total correct clicks: "+correctClick+"<br />")
+    finalScore.append("Total correct keypresses: "+correctPress+"<br /><br />")
+    finalScore.append("<span>Final Score: "+round(((correctPress+correctClick)/2)*((clickAcc+keyAcc)/2)*100)+"</span>")
+    $("body").append(finalScore)
 }
 
 function makeGUID() {

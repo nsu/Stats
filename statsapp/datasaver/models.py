@@ -10,10 +10,10 @@ class Subject(models.Model):
 class Trial(models.Model):
     clickAcc=models.FloatField()
     keyAcc=models.FloatField()
-    totBox=models.IntegerField()
-    totKey=models.IntegerField()
+    # totClick=models.IntegerField()
+    # totKey=models.IntegerField()
     subject=models.ForeignKey(Subject)
-    boxesAtEnd=models.IntegerField()
+    clickAtEnd=models.IntegerField()
     keysAtEnd=models.IntegerField()
     totCorrectClicks=models.IntegerField()
     totCorrectPress=models.IntegerField()

@@ -7,24 +7,69 @@
 
 <title>Multitasking Test</title>
 <style type="text/css" media="screen">
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
     .text{
-        border:3px solid black;
+        border:3px solid #A7DBD8;
         font-family:sans-serif;
-        font-size:2em;
-        background-color:red;
+        font-size:40px;
+        background-color: #F38630;
         height:50px;
         width:50px;
         position:absolute;
         text-align:center;
         z-index: -999;
+        text-transform: uppercase;
     }
     
     .clickable{
-        background-color:blue;
+        background-color: #69D2E7;
         height:50px;
         width:50px;
         position:absolute;
-        border:3px solid black;
+        border:3px solid #A7DBD8;
+    }
+    
+    div {
+        border-radius: 15px;
+    }
+    
+    #accuracies{
+        display: none;
+    }
+    
+    #accuracies, #directions, .final-score{
+        padding: 10px 10px 10px 10px;
+        background-color: #E0E4CC;
+        border:3px solid #A7DBD8;
+    }
+    
+    #desc{
+        width: 500px;
+        margin: 0px auto;
+        margin-top: 20px;
+        text-align:center;
+    }
+    
+    #directions {
+        width: 200px;
+        margin-left: 150px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .final-score{
+        width: 500px;
+        margin: 0px auto;
+        margin-top: 90px;
+        text-align:center;
+        font-size: 1.8em;
+        line-height: 1.5em;
+    }
+    .final-score span{
+        font-size:1.9em;
     }
 </style>
 <!-- <link rel="stylesheet" href="formstyle.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
@@ -39,7 +84,8 @@ $(function(){
 
     name = "753848ea5e4c9568d6167c28dac1e532644027be";
     savedCookie = $.JSONCookie(name);
-    if (savedCookie['guid'] !== undefined){
+    console.log(savedCookie['guid'])
+    if (savedCookie['guid'] === undefined){
         $.ajax({
             url: "form.html",
             cache: false
@@ -48,8 +94,8 @@ $(function(){
         });
     }
     
-    $("#button-holder").click(function(e){
-        if (savedCookie['guid'] !== undefined){
+    $("#start-button").click(function(e){
+        if (savedCookie['guid'] === undefined){
             jsonData = {}        
             jsonData['guid'] = makeGUID()
             jsonData['scTwo'] = $('input:checkbox[name=scTwo]:checked').val(); 
@@ -77,8 +123,8 @@ $(function(){
             
             $.JSONCookie(name, jsonData, {path: '/'});
         }
-        $("#form-holder").remove();
-        $("#desc").remove()
+        $("#accuracies").fadeIn(200);
+        $("#desc").remove();
         doTimer();
     });
 	
@@ -110,17 +156,23 @@ $(function(){
 
 <body>
 
-<div style="float:right;">Button-accuracy: <span id="press-accuracy">-</span></div>
-<br />
-<div style="float:right;">Click-accuracy: <span id="click-accuracy">-</span></div>
-<div id="desc">
-    Click on the blue boxes and type the letters within the red boxes.
+<div style="float:right">
+<div id="accuracies">
+    Button-accuracy: <span id="press-accuracy">-</span>
+    <br />
+    Click-accuracy: <span id="click-accuracy">-</span>
 </div>
-<div id="form-holder" style='margin-left:340px;margin-top:250px'>
-    <div id="button-holder" style="margin-left: 60px">
-    <button type='button'>Start</button>
+</div>
+
+<div id="desc">
+    <div id="directions">
+    Click on the blue boxes and type the letters within the orange boxes.
     </div>
-</div>    
+    <div id="form-holder">
+    </div>
+    <button id="start-button" type='button'>Start</button>
+</div>
+ 
 
 </body>
 </html>
