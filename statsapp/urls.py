@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'statsapp.views.home', name='home'),
     # url(r'^statsapp/', include('statsapp.foo.urls')),
     url(r'^submit/', 'datasaver.views.submit'),
+    url(r'^leaderboard/$', 'datasaver.views.leaderboard'),
+    url(r'^leaderboard/(?P<guid>\d*)/$', 'datasaver.views.leaderboard'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

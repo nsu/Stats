@@ -11,6 +11,14 @@
         font-family: Helvetica, Arial, sans-serif;
     }
 
+    a {
+        text-decoration: none;
+    }
+    
+    a:hover{
+        text-decoration: underline;
+    }
+
     .text{
         border:3px solid #A7DBD8;
         font-family:sans-serif;
@@ -30,6 +38,7 @@
         width:50px;
         position:absolute;
         border:3px solid #A7DBD8;
+        opacity:0.75;
     }
     
     div {
@@ -40,7 +49,7 @@
         display: none;
     }
     
-    #accuracies, #directions, .final-score{
+    #accuracies, #directions, .final-score, .leader-link{
         padding: 10px 10px 10px 10px;
         background-color: #E0E4CC;
         border:3px solid #A7DBD8;
@@ -54,10 +63,11 @@
     }
     
     #directions {
-        width: 200px;
-        margin-left: 150px;
+        width: 300px;
+        margin-left: 90px;
         margin-bottom: 20px;
         text-align: center;
+        font-size: 1.2em;
     }
     
     .final-score{
@@ -70,6 +80,15 @@
     }
     .final-score span{
         font-size:1.9em;
+    }
+    
+    .leader-link {
+        width: 200px;
+        margin: 0px auto;
+        margin-top: 20px;
+        text-align:center;
+        font-size: 1.8em;
+        line-height: 1.5em;
     }
 </style>
 <!-- <link rel="stylesheet" href="formstyle.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
@@ -104,9 +123,31 @@ $(function(){
             } else {
                 jsonData['scTwo'] = true
             }
+            
             jsonData['league'] = $('select[id=league]').val(); 
             if (jsonData['league'] === ""){
                 jsonData['league'] = false
+            }
+
+            jsonData['vgames'] = $('input:checkbox[name=vgames]:checked').val(); 
+            if (jsonData['vgames'] == undefined){
+                jsonData['vgames'] = false
+            } else {
+                jsonData['vgames'] = true
+            }
+            
+            jsonData['puzzle'] = $('input:checkbox[name=puzzle]:checked').val(); 
+            if (jsonData['puzzle'] == undefined){
+                jsonData['puzzle'] = false
+            } else {
+                jsonData['puzzle'] = true
+            }
+            
+            jsonData['FPS'] = $('input:checkbox[name=FPS]:checked').val(); 
+            if (jsonData['FPS'] == undefined){
+                jsonData['FPS'] = false
+            } else {
+                jsonData['FPS'] = true
             }
             
             jsonData['RTS'] = $('input:checkbox[name=RTS]:checked').val(); 
@@ -114,11 +155,6 @@ $(function(){
                 jsonData['RTS'] = false
             } else {
                 jsonData['RTS'] = true
-            }
-            
-            jsonData['league'] = $('select[id=league]').val(); 
-            if (jsonData['league'] === ""){
-                jsonData['league'] = false
             }
             
             $.JSONCookie(name, jsonData, {path: '/'});
@@ -166,7 +202,7 @@ $(function(){
 
 <div id="desc">
     <div id="directions">
-    Click on the blue boxes and type the letters within the orange boxes.
+    Click on the blue boxes and type the characters within the orange boxes.
     </div>
     <div id="form-holder">
     </div>

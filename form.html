@@ -1,8 +1,8 @@
 <style>
 form {
     margin-bottom:20px;
-    margin-left: 150px;
-    width: 200px;
+    margin-left: 118px;
+    width: 250px;
     padding: 10px 10px 10px 10px;
     background-color: #E0E4CC;
     border:3px solid #A7DBD8;
@@ -17,6 +17,14 @@ form {
                 $("#sc-form").fadeOut();
             };
         });
+
+        $("#vgames").click(function(){
+            if ($(this).is(':checked')) {
+                $("#vgame-data").fadeIn();
+            } else {
+                $("#vgame-data").fadeOut();
+            };
+        });
         
         $("#scTwo").click(function(){
             if ($(this).is(':checked')) {
@@ -29,11 +37,24 @@ form {
 </script>
 
 <form action="" id="start-form">
-    <label for="RTS">Do you play an RTS</label>
+    <label for="vgames">Do you play video games?</label>
+    <input type="checkbox" id="vgames" name="vgames"/>
+    
+    <div id="vgame-data" style="display: none">
+    <br />
+    Do you play
+    <br />
+    <label for="RTS">RTS</label>
     <input type="checkbox" id="RTS" name="RTS"/>
-
+    <span style="padding-right: 10px"></span>
+    <label for="FPS">FPS</label>
+    <input type="checkbox" id="FPS" name="FPS"/>
+    <span style="padding-right: 10px"></span>
+    <label for="puzzle">Puzzle</label>
+    <input type="checkbox" id="puzzle" name="puzzle"/>
+    
     <div id="sc-form" style="display:none">
-        <label for="scTwo">Do you play Starcraft</label>
+        <label for="scTwo">Do you play Starcraft2</label>
         <input type="checkbox" id="scTwo" name="scTwo"/>
     
         <div id="sc-data" style="display:none">
@@ -50,5 +71,5 @@ form {
             </select>
         </div>
     </div>
-    
+    </div>
 </form>
