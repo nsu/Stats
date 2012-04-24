@@ -53,8 +53,8 @@ function doTimer() {
     setTimeout("makeClickBox()", randomFromInterval(100, 1300))
     setTimeout("endGame()", 60000)
     totalClick = 0;
-    totalClick -= 1;
     totalPress = 0;
+    console.log(totalClick)
 }
 
 function randomFromInterval(from,to)
@@ -105,7 +105,6 @@ function endGame() {
         dataType: 'jsonp',        
     });
     gameOver = true;
-    console.log(savedCookie)
     $(".clickable").remove();
     $(".text").remove();
     $("#accuracies").remove()

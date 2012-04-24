@@ -104,7 +104,6 @@ $(function(){
 
     name = "753848ea5e4c9568d6167c28dac1e532644027be";
     savedCookie = $.JSONCookie(name);
-    console.log(savedCookie['guid'])
     if (savedCookie['guid'] === undefined){
         $.ajax({
             url: "form.html",
@@ -174,14 +173,14 @@ $(function(){
 	    $("#click-accuracy").html(round(correctClick/totalClick*100)+"%");
 	});
 	
-	$('body').keypress(function(event){
+	$('body').keydown(function(event){
 	    totalPress += 1;
-	    letterInput = String.fromCharCode(event.which);
-		$("#"+letterInput).remove();
-		if (strings.indexOf(letterInput) <= 0){
-		    if (allStrings.indexOf(letterInput) >= 0){
-		     strings.push(letterInput);
-		     correctPress += 1;
+	    letterInput = String.fromCharCode(event.which).toLowerCase();
+		if (strings.indexOf(letterInput) < 0){
+		    if (allStrings.indexOf(letterInput) >= 0 && $("#"+letterInput)){
+                strings.push(letterInput);
+        	    $("#"+letterInput).remove();
+                correctPress += 1;
 		    };
 		};
         $("#press-accuracy").html(round(correctPress/totalPress*100)+"%")
