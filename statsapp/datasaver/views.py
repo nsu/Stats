@@ -28,6 +28,7 @@ def submit(request):
     trial.subject = subj
     trial.score = round(((float(trial.clickRatio)+float(trial.keyRatio))/2)*((float(trial.clickAcc)+float(trial.keyAcc))/2)*10000)
     trial.save()
+    Trial.objects.filter(score__gte="10001").delete()
     return HttpResponse()
 
 def leaderboard(request, guid=None):

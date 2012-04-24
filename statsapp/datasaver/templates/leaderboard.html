@@ -1,0 +1,83 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+<style type="text/css" media="screen">
+    body {
+        font-family: 'Droid Sans Mono', sans-serif;
+    }
+
+    a{
+        text-decoration: none;
+    }
+    
+    a:hover{
+        text-decoration: underline;
+    }
+
+    #user-info{
+        float: left;
+        padding: 20px 20px 12px 20px;
+        background-color: #E0E4CC;
+        border:3px solid #A7DBD8;
+        border-radius: 15px;
+        font-family: Helvetica;
+    }
+
+    #scores{
+        margin: 0px auto;
+        padding: 20px 20px 20px 20px;
+        background-color: #E0E4CC;
+        border:3px solid #A7DBD8;
+        border-radius: 15px;
+        width: 400px;
+        font-size:20px;
+        font-weight: bold;
+        color: #454545;
+    }
+    
+    .score {
+        margin-left:20px
+    }
+    
+    .divider {
+        width: 375px;
+        height: 2px;
+        margin-top:5px;
+        margin-bottom: 15px;
+        border-radius: 2px;
+        background-color: #A7DBD8;
+    }
+    
+    .this-user{
+        color: #FA6900;
+    }
+</style>
+</head>
+
+<body>
+{%if guid %}
+<div id="user-info">
+    Your GUID is <span class="this-user">{{guid}}</span>
+    <br />
+    Your highest score is {{highScore}}
+    <br />
+    <br />
+    <span style="margin-left: 60px"><a href="http://www.alexkarpinski.com/Stats/">Play Again</a></span>
+</div>
+{% endif %}
+<div id="scores">
+<span style="padding-left:1px">#</span> 
+<span style="padding-left:80px">GUID</span>
+<span style="padding-left:113px">Score</span>
+<br />
+<br />
+{% for trial in trials %}
+{% if trial.subject.guID == guid %}<span class="this-user">{% endif %}
+{{forloop.counter}} {{trial.subject.guID}} <span class="score">{{trial.score}}</span><br />
+{% if trial.subject.guID == guid %}</span>{% endif %}
+<div class="divider"></div>
+{% endfor %}
+</div>
+</body>
+</html>

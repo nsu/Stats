@@ -30,6 +30,7 @@
         text-align:center;
         z-index: -999;
         text-transform: uppercase;
+        line-height:55px;
     }
     
     .clickable{
@@ -164,7 +165,7 @@ $(function(){
         doTimer();
     });
 	
-	$("html").click(function(e){
+	$("html").mousedown(function(e){
 	    totalClick +=1;
 	    if ($(e.target).hasClass('clickable')){
     	    $(e.target).remove();
@@ -186,6 +187,20 @@ $(function(){
         $("#press-accuracy").html(round(correctPress/totalPress*100)+"%")
 	});
 });
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26275906-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
 
 </head>
